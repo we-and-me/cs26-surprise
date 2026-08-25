@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Door · Connectors Summit 2026</title>
+<style>
+  @font-face { font-family: 'Avant Garde'; src: url('fonts/avantgardebold.woff2') format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'Figtree'; src: url('fonts/Figtree-Regular.ttf'); font-weight: 400; }
+  @font-face { font-family: 'Figtree'; src: url('fonts/Figtree-SemiBold.ttf'); font-weight: 600; }
+  @font-face { font-family: 'Figtree'; src: url('fonts/Figtree-Bold.ttf'); font-weight: 700; }
+  @font-face { font-family: 'Figtree'; src: url('fonts/Figtree-Italic.ttf'); font-weight: 400; font-style: italic; }
+
+  :root {
+    --blue: #1071B9; --sky: #58ABDC; --green: #8CC640; --dgreen: #6BA51F;
+    --purple: #903F97; --navy: #1F4E6B; --gray: #4C4C50; --dark: #3C3C3C;
+    --pale-blue: #EDF4FA; --pale-green: #F6FAF0; --pale-purple: #F6F0F7;
+    --radius: 24px; --radius-sm: 18px;
+    --shadow-soft: 0 8px 28px rgba(60,60,60,0.14);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Figtree', sans-serif; color: var(--gray); background: #fff; }
+  h1, h2, h3 { font-family: 'Avant Garde', sans-serif; font-weight: 700; color: var(--dark); }
+  .hidden { display: none !important; }
+
+  /* ============ ACT 1: THE DOOR ============ */
+  #door-view {
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center; padding: 40px 24px;
+    background:
+      radial-gradient(circle at 12% 15%, var(--pale-blue) 0%, transparent 34%),
+      radial-gradient(circle at 88% 20%, var(--pale-purple) 0%, transparent 30%),
+      radial-gradient(circle at 85% 85%, var(--pale-green) 0%, transparent 32%),
+      radial-gradient(circle at 10% 80%, var(--pale-blue) 0%, transparent 28%),
+      #ffffff;
+  }
+  #door-view .logo { width: min(440px, 82vw); }
+  .door-wrap { margin: 26px 0 10px; position: relative; }
+  .door-swirl {
+    position: absolute; left: 50%; bottom: -16px; transform: translateX(-50%);
+    width: min(430px, 92vw); pointer-events: none;
+  }
+  .door-svg { position: relative; }
+  .door-svg { width: min(230px, 56vw); filter: drop-shadow(0 10px 26px rgba(16,113,185,0.25)); }
+  .door-knock { animation: doorpulse 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
+  @keyframes doorpulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.015); } }
+  #door-view h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.12; margin-top: 8px; }
+  .countline { margin-top: 12px; font-size: clamp(17px, 2.6vw, 22px); color: var(--gray); }
+  .countline b { color: var(--blue); font-size: 1.25em; }
+  .patience { margin-top: 6px; font-weight: 700; color: var(--dgreen); font-size: clamp(15px, 2.2vw, 18px); }
+  .daily {
+    margin-top: 26px; max-width: 520px; background: rgba(255,255,255,0.82);
+    border: 2px solid var(--sky); border-radius: 20px; padding: 18px 26px;
+    font-size: 16px; line-height: 1.5;
+  }
+  .daily .label { font-weight: 700; color: var(--blue); font-size: 13px; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .peeker { margin-top: 14px; font-style: italic; font-size: 14px; color: var(--purple); }
+
+  .enter-btn {
+    margin-top: 30px; font-family: 'Figtree'; font-weight: 700; font-size: 15px;
+    color: var(--blue); background: #fff; border: 2px solid var(--sky);
+    border-radius: 999px; padding: 12px 30px; cursor: pointer;
+    transition: all .15s;
+  }
+  .enter-btn:hover { background: var(--pale-blue); transform: translateY(-1px); }
+  .enter-note { margin-top: 8px; font-size: 12px; color: var(--gray); opacity: 0.7; }
+
+  /* ============ ACT 2: THE WISDOM OF THE ROOM ============ */
+  #reveal-view { min-height: 100vh; }
+  .reveal-top {
+    text-align: center; padding: 40px 24px 0;
+    background: linear-gradient(180deg, var(--pale-blue) 0%, #ffffff 100%);
+  }
+  .reveal-top .logo { width: min(380px, 76vw); }
+
+  section.panel { max-width: 760px; margin: 0 auto; padding: 20px 22px 70px; }
+
+  .wisdom-head { text-align: center; margin-bottom: 24px; }
+  .wisdom-head h2 { font-size: clamp(27px, 4.2vw, 38px); }
+  .wisdom-head p { margin-top: 10px; font-size: 16.5px; max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+  .welcome-back { margin-top: 10px; font-style: italic; color: var(--purple); font-size: 14px; }
+
+  /* --- card carousel --- */
+  .carousel-wrap { text-align: center; }
+  .carousel {
+    display: flex; gap: 16px; overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 18px calc(50% - min(150px, 39vw)) 10px;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .carousel::-webkit-scrollbar { display: none; }
+  .carousel .wisdom-card {
+    flex: 0 0 auto; width: min(300px, 78vw);
+    scroll-snap-align: center;
+    transition: transform .18s ease-out, opacity .18s ease-out;
+    will-change: transform;
+  }
+  .deal-hint { margin-top: 10px; font-size: 13px; color: var(--gray); opacity: 0.75; }
+
+  .carousel-wrap { position: relative; }
+  .car-arrow {
+    position: absolute; top: 45%; transform: translateY(-50%);
+    width: 46px; height: 46px; border-radius: 50%;
+    background: #fff; border: 2px solid var(--sky); color: var(--blue);
+    font-size: 21px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 3px 10px rgba(60,60,60,0.15);
+    display: none; align-items: center; justify-content: center;
+    z-index: 5; transition: transform .12s, background .12s;
+  }
+  .car-arrow:hover { background: var(--pale-blue); transform: translateY(-50%) scale(1.06); }
+  .car-arrow.left { left: 6px; }
+  .car-arrow.right { right: 6px; }
+  @media (min-width: 700px) and (hover: hover) {
+    .car-arrow { display: flex; }
+  }
+  .wisdom-card {
+    aspect-ratio: 5 / 7; border-radius: var(--radius-sm);
+    padding: 26px 24px; color: #fff; text-align: left;
+    display: flex; flex-direction: column;
+    box-shadow: var(--shadow-soft);
+    transform-style: preserve-3d;
+  }
+  .wisdom-card.deal { animation: dealin .5s ease-out; }
+  @keyframes dealin {
+    from { transform: rotateY(90deg) translateY(12px); opacity: 0; }
+    to   { transform: rotateY(0deg) translateY(0); opacity: 1; }
+  }
+  .wisdom-card .tag {
+    align-self: flex-start;
+    background: rgba(255,255,255,0.2); color: #fff;
+    font-weight: 600; font-size: 12.5px; letter-spacing: 0.02em;
+    padding: 5px 12px; border-radius: 999px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35);
+  }
+  .wisdom-card .mid {
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+  }
+  .wisdom-card .divider {
+    height: 2px; width: 44px; border-radius: 2px;
+    background: rgba(255,255,255,0.4); margin-top: 16px;
+  }
+  .wisdom-card .quote {
+    font-family: 'Avant Garde'; font-weight: 700; letter-spacing: -0.01em;
+    line-height: 1.3; margin: 0;
+  }
+  .wisdom-card .quote.q-short { font-size: 24px; }
+  .wisdom-card .quote.q-med   { font-size: 20px; }
+  .wisdom-card .quote.q-long  { font-size: 17px; }
+  .wisdom-card .who { margin-top: 14px; font-size: 14px; font-weight: 600; opacity: 0.9; }
+  .wisdom-card .brand {
+    margin-top: auto; padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.25);
+    font-size: 12.5px; font-weight: 600; opacity: 0.85; letter-spacing: 0.02em;
+    display: flex; justify-content: space-between;
+  }
+
+  /* --- browse by theme --- */
+  #themes { margin-top: 52px; text-align: center; }
+  #themes h3 { font-size: 24px; margin-bottom: 8px; }
+  #themes .tsub { font-size: 15px; margin-bottom: 22px; }
+  .theme-chips { display: flex; flex-wrap: wrap; gap: 11px; justify-content: center; }
+  .theme-chip {
+    font-family: 'Figtree'; font-weight: 700; font-size: 14.5px;
+    background: #fff; color: var(--c); border: 2px solid var(--c);
+    border-radius: 999px; padding: 10px 20px; cursor: pointer;
+    transition: transform .12s, background .12s, color .12s;
+  }
+  .theme-chip:hover { transform: translateY(-2px); }
+  .theme-chip.active { background: var(--c); color: #fff; }
+
+  /* --- coupon ps --- */
+  .ps {
+    max-width: 560px; margin: 60px auto 0; text-align: center;
+    background: var(--pale-purple); border-radius: var(--radius); padding: 28px 30px 30px;
+  }
+  .ps h3 { color: var(--purple); font-size: 21px; }
+  .ps p { margin-top: 8px; font-size: 15.5px; line-height: 1.5; }
+  .code-btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    margin-top: 14px; font-family: 'Avant Garde'; font-weight: 700;
+    font-size: clamp(15px, 4.1vw, 20px); letter-spacing: 0.05em; color: var(--purple);
+    background: #fff; border: 2px dashed var(--purple); border-radius: 12px;
+    padding: 11px 18px; cursor: pointer; transition: transform .12s;
+    max-width: 100%;
+  }
+  .code-btn:hover { transform: translateY(-1px); }
+  .code-btn svg { width: 21px; height: 21px; flex: 0 0 auto; }
+  .copy-hint { margin-top: 7px; font-size: 12.5px; color: var(--purple); font-weight: 600; }
+  .shop-btn {
+    display: inline-block; margin-top: 16px; font-family: 'Figtree'; font-weight: 700;
+    font-size: 16.5px; color: #fff; background: var(--purple); border: none;
+    border-radius: 12px; padding: 14px 36px; cursor: pointer; text-decoration: none;
+    box-shadow: 0 5px 16px rgba(144,63,151,0.35); transition: transform .12s, background .12s;
+  }
+  .shop-btn:hover { transform: translateY(-2px); background: #7A3480; }
+
+  footer {
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    max-width: 760px; margin: 0 auto; padding: 26px 22px 40px;
+  }
+  footer img.we { height: 52px; }
+  footer img.url { height: 19px; }
+</style>
+</head>
+<body>
+
+<!-- ================= ACT 1: THE DOOR ================= -->
+<div id="door-view" class="hidden">
+  <img class="logo" src="assets/cs26-logo.png" alt="Connectors Summit 2026">
+  <div class="door-wrap">
+    <svg class="door-swirl" viewBox="0 0 420 200" fill="none">
+      <path d="M 20 190 C 90 200, 170 186, 200 168
+               C 236 146, 150 128, 176 104
+               C 198 84, 260 96, 310 76
+               C 352 60, 380 30, 396 10"
+            stroke="#8CC640" stroke-width="4.5" opacity="0.55"
+            stroke-linecap="round" stroke-dasharray="0.1 13"/>
+    </svg>
+    <svg class="door-svg door-knock" viewBox="0 0 200 260" fill="none">
+      <path d="M18 258 V110 C18 52 55 18 100 18 C145 18 182 52 182 110 V258 Z"
+            fill="#1071B9" opacity="0.14"/>
+      <path d="M30 258 V112 C30 60 62 30 100 30 C138 30 170 60 170 112 V258 Z"
+            fill="url(#doorgrad)"/>
+      <defs>
+        <linearGradient id="doorgrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#1071B9"/>
+          <stop offset="0.65" stop-color="#58ABDC"/>
+          <stop offset="1" stop-color="#903F97"/>
+        </linearGradient>
+      </defs>
+      <circle cx="142" cy="150" r="9" fill="#F6FAF0"/>
+      <circle cx="142" cy="150" r="4.5" fill="#8CC640"/>
+      <path d="M64 92 C80 76 120 76 136 92" stroke="#EDF4FA" stroke-width="5" stroke-linecap="round" opacity="0.75"/>
+      <path d="M74 110 C86 100 114 100 126 110" stroke="#EDF4FA" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+    </svg>
+  </div>
+  <h1>Patience is a<br>facilitation skill.</h1>
+  <div class="countline">This door opens on Day 3, in <b id="days-left">—</b> days.</div>
+</div>
+
+<!-- ================= ACT 2: THE WISDOM OF THE ROOM ================= -->
+<div id="reveal-view" class="hidden">
+  <div class="reveal-top">
+    <img class="logo" src="assets/cs26-logo.png" alt="Connectors Summit 2026">
+  </div>
+
+  <section class="panel">
+    <div class="wisdom-head">
+      <h2>The Wisdom of the Room</h2>
+      <p>All of these cards were authored and created by everyone who
+         presented and attended CS26.</p>
+      <div id="welcome-peeker" class="welcome-back hidden">Come back here any time to draw inspiration for your next gathering.</div>
+    </div>
+
+    <div class="carousel-wrap">
+      <button class="car-arrow left" id="car-prev" aria-label="Previous card">&#8592;</button>
+      <button class="car-arrow right" id="car-next" aria-label="Next card">&#8594;</button>
+      <div class="carousel" id="carousel"></div>
+      <div class="deal-hint" id="deal-hint">swipe to browse the deck</div>
+    </div>
+
+    <div id="themes">
+      <h3>Or browse by theme</h3>
+      <div class="tsub">The room kept circling back to these.</div>
+      <div class="theme-chips" id="theme-chips"></div>
+    </div>
+
+    <div class="ps">
+      <h3>P.S. Thank you for contributing.</h3>
+      <p>As a small gift, we are offering half off every tool we make as a
+         thank you for sharing a piece of yourself this year.
+         Good through December 31, 2026.</p>
+      <button class="code-btn" id="copy-code" aria-label="Copy code CONNECTORS2026">
+        <span id="code-text">CONNECTORS2026</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="12" height="12" rx="2.5"/>
+          <path d="M5 15H4.5A2.5 2.5 0 0 1 2 12.5v-8A2.5 2.5 0 0 1 4.5 2h8A2.5 2.5 0 0 1 15 4.5V5"/>
+        </svg>
+      </button>
+      <div class="copy-hint" id="copy-hint">tap the code to copy it</div>
+      <a class="shop-btn" href="https://weand.me/shop" target="_blank" rel="noopener">Shop the tools with your code</a>
+    </div>
+  </section>
+
+  <footer>
+    <img class="url" src="assets/url-blue.png" alt="www.weand.me">
+    <img class="we" src="assets/master-green.png" alt="We and Me">
+  </footer>
+</div>
+
+<script>
+/* ================= CONFIG ================= */
+/* Opens Dec 11, 2026 at 8:00 AM Eastern (13:00 UTC) for everyone,
+   regardless of the visitor's timezone. */
+const REVEAL_DATE = new Date(Date.UTC(2026, 11, 11, 13, 0, 0));
+
+/* Preview overrides: ?act=door or ?act=reveal */
+const params = new URLSearchParams(location.search);
+const forced = params.get('act');
+const now = new Date();
+const isOpen = forced === 'reveal' || (forced !== 'door' && now >= REVEAL_DATE);
+
+/* ================= PEEKER MEMORY ================= */
+const LS = 'cs26-day3';
+let mem = {};
+try { mem = JSON.parse(localStorage.getItem(LS) || '{}'); } catch(e) {}
+if (!isOpen && !mem.firstPeek) mem.firstPeek = now.toISOString();
+mem.visits = (mem.visits || 0) + 1;
+try { localStorage.setItem(LS, JSON.stringify(mem)); } catch(e) {}
+
+/* ================= DOOR QUOTES =================
+   One per day, cycling. Peter Block and Priya Parker only,
+   from last year's summit. */
+const DOOR_QUOTES = [
+  {q:'Connection before content is not strong enough. Connection is the content.', who:'Peter Block'},
+  {q:'A magical question is a question everyone in your group is interested in answering, and everybody is interested in hearing each other’s answers.', who:'Priya Parker'},
+  {q:'Curiosity is not a muscle. It’s much more like a light switch. You can just choose to turn it on.', who:'Chad Littlefield'},
+  {q:'Connection is the welcoming of strangers.', who:'Peter Block'},
+  {q:'Just start by practicing being a good guest. Guests have a lot of power.', who:'Priya Parker'},
+  {q:'When you walk into a room, you bring with you a possibility that did not previously exist.', who:'Chad Littlefield'},
+  {q:'We’re replacing advice with curiosity. The most beautiful question you can ask is: why does that matter to you?', who:'Peter Block'},
+  {q:'A good purpose is specific and disputable. It’s not for everybody, and it’s trying to do something.', who:'Priya Parker'},
+  {q:'A choice of words is often a choice of worlds.', who:'Chad Littlefield'},
+  {q:'We’re human. We’re imperfect. We’re fools, but we don’t need fixing. That’s what it means to be human.', who:'Peter Block'},
+  {q:'Sometimes a community does not need to talk more. What they actually need is a dance party.', who:'Priya Parker'},
+  {q:'When you’re asked a question that you’ve never thought about, that’s where the future’s getting edited.', who:'Chad Littlefield'},
+  {q:'If you’re here now, you’re on time.', who:'Chad Littlefield'},
+  {q:'If it’s beautifully imperfect, it means that it’s real.', who:'Chad Littlefield'},
+  {q:'A simple prompt and a group of three. This is the unit of transformation.', who:'Chad Littlefield'},
+];
+function dayIndex(d) { return Math.floor(d.getTime() / 86400000); }
+
+/* ================= ROUTER ================= */
+function showReveal() {
+  document.title = 'The Wisdom of the Room · Connectors Summit 2026';
+  document.getElementById('door-view').classList.add('hidden');
+  document.getElementById('reveal-view').classList.remove('hidden');
+  if (mem.firstPeek) document.getElementById('welcome-peeker').classList.remove('hidden');
+  window.scrollTo(0, 0);
+}
+
+if (isOpen) {
+  showReveal();
+} else {
+  document.getElementById('door-view').classList.remove('hidden');
+  const msLeft = REVEAL_DATE - now;
+  document.getElementById('days-left').textContent = Math.max(1, Math.ceil(msLeft / 86400000));
+}
+
+/* ================= WISDOM DATA =================
+   Real words from Connectors Summit 2025: session transcripts
+   plus the Collaborative Book Typeform. */
+const WISDOM = [
+  /* --- Connection --- */
+  {q:'Connection before content is not strong enough. Connection is the content.', who:'Peter Block', sess:'Connection is the Content', theme:'Connection'},
+  {q:'Right now, we live in an era of isolation by design.', who:'Peter Block', sess:'Connection is the Content', theme:'Connection'},
+  {q:'Just start by practicing being a good guest. Guests have a lot of power.', who:'Priya Parker', sess:'Opening Keynote', theme:'Connection'},
+  {q:'Welcome is a verb. It’s something you do, not something you write on a sign.', who:'Kerri Price', sess:'Deliberate Reflection', theme:'Connection'},
+  {q:'We’re building campfires that melt the ice.', who:'Jan Keck', sess:'Facilitator Showcase', theme:'Connection'},
+  {q:'A simple prompt and a group of three. This is the unit of transformation.', who:'Chad Littlefield', sess:'Now What? Closing Session', theme:'Connection'},
+  {q:'Our purpose is to bring the pieces together and ultimately build the world with our opponents.', who:'Laurie Mulvey', sess:'Thinking Together Method', theme:'Connection'},
+  {q:'Connection isn’t a warmup. Connection is the work.', who:'Mandee', sess:'The Collaborative Book', theme:'Connection'},
+  {q:'Connection extends beyond the meeting. It’s how systems shift, communities heal, and change takes root.', who:'Alicia', sess:'The Collaborative Book', theme:'Connection'},
+  {q:'The role of the leader is to connect. Without connection, nothing of value happens.', who:'Mary', sess:'The Collaborative Book', theme:'Connection'},
+  {q:'Being a connector means translating between worlds so people feel less alone and more capable.', who:'Sara', sess:'The Collaborative Book', theme:'Connection'},
+  {q:'Bringing people together to solve problems no one could tackle alone.', who:'Debbie', sess:'The Collaborative Book', theme:'Connection'},
+  {q:'Creating psychological safety for others to blaze new trails.', who:'Mandee', sess:'The Collaborative Book', theme:'Connection'},
+
+  /* --- Belonging --- */
+  {q:'Connection is the welcoming of strangers.', who:'Peter Block', sess:'Connection is the Content', theme:'Belonging'},
+  {q:'There’s nothing more unkind and isolating to the world than when like-minded people come together.', who:'Peter Block', sess:'Connection is the Content', theme:'Belonging'},
+  {q:'We’re human. We’re imperfect. We’re fools, but we don’t need fixing. That’s what it means to be human.', who:'Peter Block', sess:'Connection is the Content', theme:'Belonging'},
+  {q:'To think I need to be better than I am is an act of violence aimed at myself.', who:'Peter Block', sess:'Connection is the Content', theme:'Belonging'},
+  {q:'The space is not just what we take from it, but also what we offer.', who:'Shaheen', sess:'Opening Keynote', theme:'Belonging'},
+  {q:'Every one of us is perfectly imperfect, and when we come together with joy and curiosity and love, anything is possible.', who:'Amy', sess:'The Collaborative Book', theme:'Belonging'},
+
+  /* --- Questions --- */
+  {q:'A magical question is a question everyone in your group is interested in answering, and everybody is interested in hearing each other’s answers.', who:'Priya Parker', sess:'Opening Keynote', theme:'Questions'},
+  {q:'We’re replacing advice with curiosity. The most beautiful question you can ask is: why does that matter to you?', who:'Peter Block', sess:'Connection is the Content', theme:'Questions'},
+  {q:'Curiosity is not a muscle. It’s much more like a light switch. You can just choose to turn it on.', who:'Chad Littlefield', sess:'Opening Keynote', theme:'Questions'},
+  {q:'What part of you doesn’t want to be here?', who:'Manal', sess:'Facilitator Showcase', theme:'Questions'},
+  {q:'When in doubt, ask first, then tell.', who:'Romy', sess:'Facilitator Showcase', theme:'Questions'},
+  {q:'A choice of words is often a choice of worlds.', who:'Chad Littlefield', sess:'Future Focused Training', theme:'Questions'},
+  {q:'When you’re asked a question that you’ve never thought about, that’s where the future’s getting edited.', who:'Chad Littlefield', sess:'Future Focused Training', theme:'Questions'},
+  {q:'We didn’t come for answers. We came for better questions.', who:'Amara', sess:'AI for Connectors Lab', theme:'Questions'},
+  {q:'Ask a question, then listen and receive the answer.', who:'Christy', sess:'The Collaborative Book', theme:'Questions'},
+
+  /* --- Purpose --- */
+  {q:'The biggest mistake we make when we gather is we skip defining the purpose.', who:'Priya Parker', sess:'Opening Keynote', theme:'Purpose'},
+  {q:'A good purpose is specific and disputable. It’s not for everybody, and it’s trying to do something.', who:'Priya Parker', sess:'Opening Keynote', theme:'Purpose'},
+  {q:'So often, the more is not the merrier. The more is the hairier or the scarier.', who:'Priya Parker', sess:'Opening Keynote', theme:'Purpose'},
+  {q:'Sometimes a community does not need to talk more. What they actually need is a dance party.', who:'Priya Parker', sess:'Opening Keynote', theme:'Purpose'},
+
+  /* --- Courage & truth --- */
+  {q:'Everything that matters breaks my heart and makes me happy.', who:'Peter Block', sess:'Connection is the Content', theme:'Courage & truth'},
+  {q:'If there’s no risk, then there’s no future. And tomorrow is gonna be just like yesterday.', who:'Peter Block', sess:'Connection is the Content', theme:'Courage & truth'},
+  {q:'We’re all blind scholars, and we need each other to figure out what the truth is.', who:'Laurie Mulvey', sess:'Thinking Together Method', theme:'Courage & truth'},
+  {q:'Underneath what you’re saying to me, I know there is something true.', who:'Laurie Mulvey', sess:'Thinking Together Method', theme:'Courage & truth'},
+  {q:'Slurs and throwing chairs are the lesser problem. The bigger problem is not saying what you think.', who:'Laurie Mulvey', sess:'Thinking Together Method', theme:'Courage & truth'},
+  {q:'What if it was all true? All of it.', who:'Laurie Mulvey', sess:'Thinking Together Method', theme:'Courage & truth'},
+  {q:'There’s fear if you stay, and there’s fear if you go. But if you go, on the other side waits joy and hope and opportunity.', who:'Amelia', sess:'Connection is the Content', theme:'Courage & truth'},
+  {q:'When you walk into a room, you bring with you a possibility that did not previously exist.', who:'Chad Littlefield', sess:'Unofficial Starts', theme:'Courage & truth'},
+  {q:'I would much rather lead an experience that is imperfect and messy, but real and relevant for people.', who:'Chad Littlefield', sess:'Future Focused Training', theme:'Courage & truth'},
+  {q:'If it’s beautifully imperfect, it means that it’s real.', who:'Chad Littlefield', sess:'Unofficial Starts', theme:'Courage & truth'},
+  {q:'Let go of perfection. Pros adjust.', who:'Winnie', sess:'The Collaborative Book', theme:'Courage & truth'},
+
+  /* --- Unofficial starts --- */
+  {q:'You’re not late, you’re here.', who:'Mark Collard', sess:'Unofficial Starts', theme:'Unofficial starts'},
+  {q:'Fun, I have found, is the most powerful magnet.', who:'Mark Collard', sess:'Unofficial Starts', theme:'Unofficial starts'},
+  {q:'If it’s not fun, it ain’t worth doing.', who:'Mark Collard', sess:'Unofficial Starts', theme:'Unofficial starts'},
+  {q:'We typically reward people for being late by waiting for them.', who:'Chad Littlefield', sess:'The Contribution Method', theme:'Unofficial starts'},
+  {q:'If you’re here now, you’re on time.', who:'Chad Littlefield', sess:'Future Focused Training', theme:'Unofficial starts'},
+  {q:'We’re not waiting for everybody to arrive. That’s the sentence I hope to eliminate from people’s language.', who:'Jan Keck', sess:'Facilitator Showcase', theme:'Unofficial starts'},
+
+  /* --- Reflection --- */
+  {q:'Deliberate as a verb means to think deeply, and deliberate as an adjective means to act with intention.', who:'Kerri Price', sess:'Deliberate Reflection', theme:'Reflection'},
+  {q:'Without reflection, no learning can occur.', who:'Chad Littlefield', sess:'Now What? Closing Session', theme:'Reflection'},
+  {q:'Really great closings often leave a breadcrumb to whatever is happening next.', who:'Chad Littlefield', sess:'The Contribution Method', theme:'Reflection'},
+  {q:'Our brains are actually tea strainers: what comes out on the other side is what we’ve experienced, practiced, reflected, discussed with others.', who:'Romy', sess:'Facilitator Showcase', theme:'Reflection'},
+  {q:'Sometimes we overthink ourselves out of being useful.', who:'Kerri Price', sess:'Deliberate Reflection', theme:'Reflection'},
+  {q:'To listen to understand gets harder and harder the smarter you get, because the more you have to say.', who:'Chad Littlefield', sess:'The Contribution Method', theme:'Reflection'},
+  {q:'State matters more than script.', who:'Chad Littlefield', sess:'Facilitator Showcase', theme:'Reflection'},
+  {q:'You don’t need to fix what’s named. You just need to make it visible and survivable. What’s unnamed still leads.', who:'Manal', sess:'Facilitator Showcase', theme:'Reflection'},
+  {q:'The check-in doesn’t create the feeling. It simply stops pretending the feeling isn’t already there.', who:'Manal', sess:'Facilitator Showcase', theme:'Reflection'},
+
+  /* --- Contribution --- */
+  {q:'Part of the essence of the contribution method is to flip the effort that I’m putting in over to the group.', who:'Chad Littlefield', sess:'The Contribution Method', theme:'Contribution'},
+  {q:'Almost everything I say is in response to what I’ve invited the group to contribute.', who:'Chad Littlefield', sess:'Facilitator Showcase', theme:'Contribution'},
+  {q:'How might we see every single person who walks into our sessions as a full cup of life experience we can drink from?', who:'Romy', sess:'Facilitator Showcase', theme:'Contribution'},
+  {q:'If you rely on me to make your summit experience good, you will be sorely disappointed.', who:'Chad Littlefield', sess:'Future Focused Training', theme:'Contribution'},
+  {q:'If you create art in any form, you are an artist.', who:'Sarah Jo Brockhouse', sess:'AI for Connectors Lab', theme:'Contribution'},
+  {q:'It doesn’t have to be perfect. It’s perfect because you made it.', who:'Chad Littlefield', sess:'AI for Connectors Lab', theme:'Contribution'},
+  {q:'If you’re talking more than the group, you’re stealing their learning.', who:'Marie-Christine', sess:'The Collaborative Book', theme:'Contribution'},
+  {q:'A mentor told me that if I’m working harder than the group, I’m doing it wrong.', who:'Sara', sess:'The Collaborative Book', theme:'Contribution'},
+  {q:'Don’t aim to be impressive. Aim to be useful.', who:'Alicia', sess:'The Collaborative Book', theme:'Contribution'},
+
+  /* --- Tough crowds --- */
+  {q:'Give the skeptics a job early. Nothing disarms a tough crowd faster than being made useful.', who:'Sara', sess:'The Collaborative Book', theme:'Tough crowds'},
+  {q:'Address the elephant in the room. It is not yours to fix, but not addressing it doesn’t make it go away.', who:'Heather', sess:'The Collaborative Book', theme:'Tough crowds'},
+  {q:'Invite the toughest critic to lead a discussion.', who:'Justin', sess:'The Collaborative Book', theme:'Tough crowds'},
+  {q:'Breathe. Consider everyone has a gift to share.', who:'Kim', sess:'The Collaborative Book', theme:'Tough crowds'},
+
+  /* --- Commitments --- */
+  {q:'I will approach my daily work with generosity.', who:'Nika', sess:'The Collaborative Book', theme:'Commitments'},
+  {q:'I will use my full cup to pour into others as a facilitator.', who:'Kasey', sess:'The Collaborative Book', theme:'Commitments'},
+  {q:'I believe connection is the path to a better future.', who:'Justin', sess:'The Collaborative Book', theme:'Commitments'},
+  {q:'I believe connection IS the content, and therefore I will provide space for connection.', who:'Gretchen', sess:'The Collaborative Book', theme:'Commitments'},
+  {q:'I believe our work as connectors has the power to change the world for the better.', who:'Tracy', sess:'The Collaborative Book', theme:'Commitments'},
+];
+
+/* Acts of Connection card palette */
+const CARD_COLORS = ['#1071B9', '#6BA51F', '#903F97', '#1F4E6B'];
+const themeColor = {};
+[...new Set(WISDOM.map(w => w.theme))].forEach((t, i) => themeColor[t] = CARD_COLORS[i % CARD_COLORS.length]);
+
+function cardHTML(w) {
+  const size = w.q.length < 65 ? 'q-short' : (w.q.length < 130 ? 'q-med' : 'q-long');
+  return '<div class="wisdom-card" style="background:' + themeColor[w.theme] + '">' +
+    '<span class="tag">' + esc(w.theme) + '</span>' +
+    '<div class="mid">' +
+      '<p class="quote ' + size + '">' + esc(w.q) + '</p>' +
+      '<div class="divider"></div>' +
+      '<div class="who">&mdash; ' + esc(w.who) + ' &middot; ' + esc(w.sess) + '</div>' +
+    '</div>' +
+    '<div class="brand"><span>Connectors Summit 2025</span><span>weand.me</span></div>' +
+  '</div>';
+}
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+/* ================= CARD CAROUSEL ================= */
+/* All cards visible by default in a swipeable, snap-to-center wheel.
+   The centered card is dominant; neighbors shrink and fade.
+   Theme chips filter the wheel; tapping the active chip clears it. */
+let activeTheme = null;   /* null = full shuffled deck */
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+const deck = shuffle([...WISDOM.keys()]);
+
+const carousel = document.getElementById('carousel');
+
+function updateScales() {
+  const center = carousel.scrollLeft + carousel.clientWidth / 2;
+  carousel.querySelectorAll('.wisdom-card').forEach(el => {
+    const elCenter = el.offsetLeft + el.offsetWidth / 2;
+    const d = Math.min(1, Math.abs(center - elCenter) / (el.offsetWidth * 1.1));
+    el.style.transform = 'scale(' + (1 - 0.12 * d) + ')';
+    el.style.opacity = 1 - 0.18 * d;
+  });
+}
+
+function buildCarousel() {
+  const list = activeTheme === null
+    ? deck.map(i => WISDOM[i])
+    : WISDOM.filter(w => w.theme === activeTheme);
+  carousel.innerHTML = list.map(cardHTML).join('');
+  carousel.scrollLeft = 0;
+  updateScales();
+  const hint = document.getElementById('deal-hint');
+  hint.textContent = activeTheme === null
+    ? 'swipe to browse all ' + list.length + ' cards'
+    : list.length + ' cards in “' + activeTheme + '” · swipe to browse';
+}
+
+carousel.addEventListener('scroll', () => requestAnimationFrame(updateScales));
+window.addEventListener('resize', updateScales);
+
+function stepCarousel(dir) {
+  const card = carousel.querySelector('.wisdom-card');
+  if (!card) return;
+  carousel.scrollBy({ left: dir * (card.offsetWidth + 16), behavior: 'smooth' });
+}
+document.getElementById('car-prev').addEventListener('click', () => stepCarousel(-1));
+document.getElementById('car-next').addEventListener('click', () => stepCarousel(1));
+
+if (isOpen || true) {  /* wire once */
+  buildCarousel();
+
+  /* theme chips */
+  const chips = document.getElementById('theme-chips');
+  Object.keys(themeColor).forEach(theme => {
+    const b = document.createElement('button');
+    b.className = 'theme-chip';
+    b.style.setProperty('--c', themeColor[theme]);
+    b.textContent = theme;
+    b.addEventListener('click', () => {
+      const wasActive = b.classList.contains('active');
+      document.querySelectorAll('.theme-chip').forEach(c => c.classList.remove('active'));
+      activeTheme = wasActive ? null : theme;
+      if (!wasActive) b.classList.add('active');
+      buildCarousel();
+      carousel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    chips.appendChild(b);
+  });
+
+  /* copy code */
+  const copyBtn = document.getElementById('copy-code');
+  copyBtn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText('CONNECTORS2026'); } catch(e) {
+      const ta = document.createElement('textarea');
+      ta.value = 'CONNECTORS2026'; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); ta.remove();
+    }
+    document.getElementById('copy-hint').textContent = 'copied! see you at checkout';
+    setTimeout(() => document.getElementById('copy-hint').textContent = 'tap the code to copy it', 2600);
+  });
+}
+</script>
+</body>
+</html>
